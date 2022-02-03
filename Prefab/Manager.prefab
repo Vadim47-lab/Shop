@@ -60,6 +60,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  _toys: 00000000000000000000000000000000
   _bearButton: {fileID: 0}
   _cubeButton: {fileID: 0}
   _ballButton: {fileID: 0}
@@ -70,6 +71,7 @@ MonoBehaviour:
   _returnBallButton: {fileID: 0}
   _returnDuckButton: {fileID: 0}
   _shop: {fileID: 0}
+  _people: {fileID: 0}
 --- !u!114 &5501454235089733988
 MonoBehaviour:
   m_ObjectHideFlags: 0

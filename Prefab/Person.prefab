@@ -196,6 +196,4 @@ MonoBehaviour:
   _moneyText: {fileID: 5411990084209154686}
   _backpack: {fileID: 0}
   _shop: {fileID: 0}
-  _mainMenu: {fileID: 1674450935700578866, guid: 1f9d0719f3223154b94c01ed41bb0a7c,
-    type: 3}
   _zeroAmount: 0

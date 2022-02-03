@@ -16,6 +16,7 @@ public class Shop : MonoBehaviour
     [SerializeField] private People _people;
 
     [Header("Variables")]
+    [SerializeField] private TMP_Text _textCheck;
     [SerializeField] private int _startAmount;
     [SerializeField] private int _endAmount;
     [SerializeField] private int _startPrice;
@@ -33,7 +34,10 @@ public class Shop : MonoBehaviour
 
     private void Start()
     {
-        _initialAmountToys = _amountToys;
+        for (int count = 0; count < _amountToys.Length; count++)
+        {
+            _initialAmountToys[count] = _amountToys[count];
+        }
 
         for (int count = 0; count < _name.Length; count++)
         {
@@ -84,23 +88,36 @@ public class Shop : MonoBehaviour
         }
     }
 
-    public void BuyToy(int count)
+    public void GetToy(int count)
     {
         if (People.Money >= _price[count])
         {
-            _amountToys[count]--;
+            People.Money -= TransferPrice[count];
 
-            _people.GetToy(count);
+            _amountToys[count]--;
         }
+    }
+
+    public void BuyToy(int count)
+    {
+        _people.GetToy(count);
+    }
+
+    public void CreateCheck(int count)
+    {
+        _people.CreateCheck(count, _textCheck);
     }
 
     public void ReturnToy(int count)
     {
-        if (People.Money < MainMenu.Result && _amountToys[count] <= _initialAmountToys[count])
+        if (People.Money < MainMenu.Result)
         {
-            _amountToys[count]++;
+            if (_amountToys[count] <= _initialAmountToys[count])
+            {
+                _amountToys[count]++;
 
-            _people.ReturnMoney(count);
+                _people.ReturnMoney(count);
+            }
         }
     }
 
