@@ -182,15 +182,7 @@ public class UserInterface : MonoBehaviour
         for (int i = 0; i < _toys.Length; i++)
         {
             _shop.BuyToy(i);
-        }
-
-        for (int i = 0; i < _toys.Length; i++)
-        {
             _shop.CreateCheck(i);
-        }
-
-        for (int i = 0; i < _toys.Length; i++)
-        {
             _toys[i] = 0;
         }
 

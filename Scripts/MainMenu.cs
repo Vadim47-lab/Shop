@@ -40,7 +40,7 @@ public class MainMenu : MonoBehaviour
 
     private void OnApplyChangesButtonClick()
     {
-        if (_inputMoney.text == "")
+        if (string.IsNullOrEmpty(_inputMoney.text))
         {
             _textMoney.text = "Ошибка!";
         }
