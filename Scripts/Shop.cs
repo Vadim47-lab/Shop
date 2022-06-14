@@ -96,6 +96,6 @@ public class Shop : MonoBehaviour
 
     public void ShowDescription(int count, TMP_Text toyText)
     {
-        //toyText.text = "Название: " + _toy._name[count] + ",\nколичество: " + _toy._amountToys[count] + ",\nцена: " + _toy._price[count] + ".";
+        toyText.text = "Название: " + _toy._name[count] + ",\nколичество: " + _toy._amountToys[count] + ",\nцена: " + _toy._price[count] + ".";
     }
 }
