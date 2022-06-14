@@ -3,59 +3,45 @@ using TMPro;
 
 public class Shop : MonoBehaviour
 {
+    private readonly Toy _toy;
+
     [Header("Array")]
-    [SerializeField] private int[] _price;
-    [SerializeField] private string[] _name;
-    [SerializeField] private int[] _amountToys;
-    [SerializeField] private int[] _initialAmountToys;
+    [SerializeField] private GameObject[] _toys;
     [SerializeField] private TMP_Text[] _toyText;
-    [SerializeField] private GameObject[] _toy;
 
     [Header("GameObject")]
     [SerializeField] private GameObject _store;
     [SerializeField] private People _people;
+    [SerializeField] private TMP_Text _textCheck;
 
     [Header("Variables")]
-    [SerializeField] private TMP_Text _textCheck;
-    [SerializeField] private int _startAmount;
-    [SerializeField] private int _endAmount;
-    [SerializeField] private int _startPrice;
-    [SerializeField] private int _endPrice;
     [SerializeField] private int _zeroAmount;
-
-    [Header("Variables Toys")]
-    [SerializeField] private int _firstToy;
-    [SerializeField] private int _secondToy;
-    [SerializeField] private int _thirdToy;
-    [SerializeField] private int _fourthToy;
 
     public string[] TransferName { get; private set; }
     public int[] TransferPrice { get; private set; }
 
     private void Start()
     {
-        for (int count = 0; count < _amountToys.Length; count++)
+        _toy.AddInfo();
+
+        for (int count = 0; count < _toy.AmountToys.Length; count++)
         {
-            _initialAmountToys[count] = _amountToys[count];
+            _toy.AddAmount(count);
+            _toy.InitialAmountToys[count] = _toy.AmountToys[count];
         }
 
-        for (int count = 0; count < _name.Length; count++)
+        for (int count = 0; count < _toy.Name.Length; count++)
         {
-            AddName(count);
+            _toy.AddName(count);
         }
 
-        for (int count = 0; count < _price.Length; count++)
+        for (int count = 0; count < _toy.Price.Length; count++)
         {
-            AddPrice(count);
+            _toy.AddPrice(count);
         }
 
-        for (int count = 0; count < _amountToys.Length; count++)
-        {
-            AddAmount(count);
-        }
-
-        TransferName = _name;
-        TransferPrice = _price;
+        TransferName = _toy.Name;
+        TransferPrice = _toy.Price;
     }
 
     private void Update()
@@ -74,27 +60,27 @@ public class Shop : MonoBehaviour
             ShowDescription(count, _toyText[count]);
         }
 
-        for (int count = 0; count < _amountToys.Length; count++)
+        for (int count = 0; count < _toy.AmountToys.Length; count++)
         {
-            if (_amountToys[count] == _zeroAmount)
+            if (_toy.AmountToys[count] == _zeroAmount)
             {
-                _toy[count].SetActive(false);
+                _toys[count].SetActive(false);
             }
 
-            else if (_amountToys[count] != _zeroAmount)
+            else if (_toy.AmountToys[count] != _zeroAmount)
             {
-                _toy[count].SetActive(true);
+                _toys[count].SetActive(true);
             }
         }
     }
 
     public void GetToy(int count)
     {
-        if (People.Money >= _price[count])
+        if (People.Money >= _toy.Price[count])
         {
             People.Money -= TransferPrice[count];
 
-            _amountToys[count]--;
+            _toy.AmountToys[count]--;
         }
     }
 
@@ -112,50 +98,86 @@ public class Shop : MonoBehaviour
     {
         if (People.Money < MainMenu.Result)
         {
-            if (_amountToys[count] <= _initialAmountToys[count])
+            if (_toy.AmountToys[count] <= _toy.InitialAmountToys[count])
             {
-                _amountToys[count]++;
+                _toy.AmountToys[count]++;
 
                 _people.ReturnMoney(count);
             }
         }
     }
 
-    private void AddName(int count)
+    public void ShowDescription(int count, TMP_Text toyText)
+    {
+        toyText.text = "Название: " + _toy.Name[count] + ",\nколичество: " + _toy.AmountToys[count] + ",\nцена: " + _toy.Price[count] + ".";
+    }
+}
+
+public class Toy
+{
+    private int _startPrice;
+    private int _endPrice;
+    private int _startAmount;
+    private int _endAmount;
+
+    private int _firstToy;
+    private int _secondToy;
+    private int _thirdToy;
+    private int _fourthToy;
+
+    public int[] Price { get; private set; }
+    public string[] Name { get; private set; }
+    public int[] AmountToys { get; private set; }
+    public int[] InitialAmountToys { get; private set; }
+
+    public void AddInfo()
+    {
+        _startAmount = 1;
+        _endAmount = 4;
+        _startPrice = 100;
+        _endPrice = 300;
+
+        _firstToy = 1;
+        _secondToy = 2;
+        _thirdToy = 3;
+        _fourthToy = 4;
+    }
+
+    public void AddName(int count)
     {
         if (count == _firstToy)
         {
-            _name[count] = "Плюшевый мишка";
+            Name[count] = "Плюшевый мишка";
         }
 
         if (count == _secondToy)
         {
-            _name[count] = "Резиновый кубик";
+            Name[count] = "Резиновый кубик";
         }
 
         if (count == _thirdToy)
         {
-            _name[count] = "Резиновый мяч";
+            Name[count] = "Резиновый мяч";
         }
 
         if (count == _fourthToy)
         {
-            _name[count] = "Резиновая утка";
+            Name[count] = "Резиновая утка";
         }
     }
 
-    private void AddPrice(int count)
+    public void AddPrice(int count)
     {
-        _price[count] = Random.Range(_startPrice, _endPrice);
+        Price[count] = Random.Range(_startPrice, _endPrice);
     }
 
-    private void AddAmount(int count)
+    public void AddAmount(int count)
     {
-        _amountToys[count] = Random.Range(_startAmount, _endAmount);
-    }
+        for (int i = 0; i < 3; i++)
+        {
+            InitialAmountToys[i] = 1;
+        }
 
-    private void ShowDescription(int count, TMP_Text toyText)
-    {
-        toyText.text = "Название: " + _name[count] + ",\nколичество: " + _amountToys[count] + ",\nцена: " + _price[count] + ".";
+        AmountToys[count] = Random.Range(_startAmount, _endAmount);
     }
 }

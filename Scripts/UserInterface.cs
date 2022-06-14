@@ -4,7 +4,7 @@ using UnityEngine.Events;
 
 public class UserInterface : MonoBehaviour
 {
-    [SerializeField] private UnityEvent _buttonPress;
+    [SerializeField] private readonly UnityEvent _buttonPress;
 
     [Header("Button")]
     [SerializeField] private Button _bearButton;
@@ -30,7 +30,8 @@ public class UserInterface : MonoBehaviour
     [SerializeField] private GameObject _check;
 
     private int _count;
-    public int[] _toys;
+
+    public int[] Toys { get; private set; }
 
     private void OnEnable()
     {
@@ -94,7 +95,7 @@ public class UserInterface : MonoBehaviour
 
         Count0();
 
-        _toys[0]++;
+        Toys[0]++;
 
         _shop.GetToy(_count);
     }
@@ -105,7 +106,7 @@ public class UserInterface : MonoBehaviour
 
         Count1();
 
-        _toys[1]++;
+        Toys[1]++;
 
         _shop.GetToy(_count);
     }
@@ -116,7 +117,7 @@ public class UserInterface : MonoBehaviour
 
         Count2();
 
-        _toys[2]++;
+        Toys[2]++;
 
         _shop.GetToy(_count);
     }
@@ -127,7 +128,7 @@ public class UserInterface : MonoBehaviour
 
         Count3();
 
-        _toys[3]++;
+        Toys[3]++;
 
         _shop.GetToy(_count);
     }
@@ -179,11 +180,11 @@ public class UserInterface : MonoBehaviour
     {
         EventButtonPress();
 
-        for (int i = 0; i < _toys.Length; i++)
+        for (int i = 0; i < Toys.Length; i++)
         {
             _shop.BuyToy(i);
             _shop.CreateCheck(i);
-            _toys[i] = 0;
+            Toys[i] = 0;
         }
 
         _check.SetActive(true);

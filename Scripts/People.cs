@@ -60,7 +60,7 @@ public class People : MonoBehaviour
 
     public void GetToy(int count)
     {
-        _amount[count] += _userInterface._toys[count];
+        _amount[count] += _userInterface.Toys[count];
     }
 
     public void ReturnMoney(int count)
