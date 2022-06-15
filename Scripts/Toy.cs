@@ -2,8 +2,32 @@
 
 public class Toy : MonoBehaviour
 {
-    [SerializeField] private int[] _price;
-    [SerializeField] private string[] _name;
-    [SerializeField] private int[] _amountToys;
-    [SerializeField] private int[] _initialAmountToys;
+    private int _price;
+    private string _name;
+    private int _amountToys;
+
+    public string TransferName { get; private set; }
+    public int TransferPrice { get; private set; }
+    public int TransferAmountToys { get; set; }
+
+    private void Start()
+    {
+        TransferName = _name;
+        TransferPrice = _price;
+        TransferAmountToys = _amountToys;
+    }
+
+    private void Update()
+    {
+        _name = TransferName;
+        _price = TransferPrice;
+        _amountToys = TransferAmountToys;
+    }
+
+    public Toy(int price, string name, int amountToys)
+    {
+        _price = price;
+        _name = name;
+        _amountToys = amountToys;
+    }
 }

@@ -4,9 +4,10 @@ using TMPro;
 public class Shop : MonoBehaviour
 {
     private readonly Toy _toy;
+    private Toy[] _toys = { new Toy(100, "Плюшевый Мишка", 3), new Toy(200, "Куб", 2), new Toy(150, "Мяч", 1), new Toy(300, "Утка", 4) };
 
     [Header("Array")]
-    [SerializeField] private GameObject[] _toys;
+    [SerializeField] private GameObject[] _toysGameObject;
     [SerializeField] private TMP_Text[] _toyText;
 
     [Header("GameObject")]
@@ -16,20 +17,7 @@ public class Shop : MonoBehaviour
 
     [Header("Variables")]
     [SerializeField] private int _zeroAmount;
-
-    public string[] TransferName { get; private set; }
-    public int[] TransferPrice { get; private set; }
-
-    private void Start()
-    {
-        for (int count = 0; count < _toy._amountToys.Length; count++)
-        {
-            _toy._initialAmountToys[count] = _toy._amountToys[count];
-        }
-
-        TransferName = _toy._name;
-        TransferPrice = _toy._price;
-    }
+    [SerializeField] private int _initialAmountToys;
 
     private void Update()
     {
@@ -44,30 +32,30 @@ public class Shop : MonoBehaviour
 
         for (int count = 0; count < _toyText.Length; count++)
         {
-            ShowDescription(count, _toyText[count]);
+            ShowDescription(_toyText[count]);
         }
 
-         for (int count = 0; count < _toy._amountToys.Length; count++)
+         for (int count = 0; count < _toys.Length; count++)
          {
-             if (_toy._amountToys[count] == _zeroAmount)
+             if (_toy.TransferAmountToys == _zeroAmount)
              {
-                 _toys[count].SetActive(false);
+                _toysGameObject[count].SetActive(false);
              }
 
-             else if (_toy._amountToys[count] != _zeroAmount)
+             else if (_toy.TransferAmountToys != _zeroAmount)
              {
-                 _toys[count].SetActive(true);
+                _toysGameObject[count].SetActive(true);
              }
          }
     }
 
     public void GetToy(int count)
     {
-        if (People.Money >= _toy._price[count])
+        if (People.Money >= _toy.TransferPrice)
         {
-            People.Money -= TransferPrice[count];
+            People.Money -= _toy.TransferPrice;
 
-            _toy._amountToys[count]--;
+            _toy.TransferAmountToys--;
         }
     }
 
@@ -85,17 +73,17 @@ public class Shop : MonoBehaviour
     {
         if (People.Money < MainMenu.Result)
         {
-            if (_toy._amountToys[count] <= _toy._initialAmountToys[count])
+            if (_toy.TransferAmountToys <= _initialAmountToys)
             {
-                _toy._amountToys[count]++;
+                _toy.TransferAmountToys++;
 
                 _people.ReturnMoney(count);
             }
         }
     }
 
-    public void ShowDescription(int count, TMP_Text toyText)
+    public void ShowDescription(TMP_Text toyText)
     {
-        toyText.text = "Название: " + _toy._name[count] + ",\nколичество: " + _toy._amountToys[count] + ",\nцена: " + _toy._price[count] + ".";
+        toyText.text = "Название: " + _toy.TransferName + ",\nколичество: " + _toy.TransferAmountToys + ",\nцена: " + _toy.TransferPrice + ".";
     }
 }

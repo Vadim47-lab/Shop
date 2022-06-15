@@ -12,6 +12,7 @@ public class People : MonoBehaviour
     [SerializeField] private TMP_Text _moneyText;
     [SerializeField] private GameObject _backpack;
     [SerializeField] private Shop _shop;
+    [SerializeField] private Toy _toy;
     [SerializeField] private UserInterface _userInterface;
     [SerializeField] private int _zeroAmount;
 
@@ -65,18 +66,18 @@ public class People : MonoBehaviour
 
     public void ReturnMoney(int count)
     {
-        Money += _shop.TransferPrice[count];
+        Money += _toy.TransferPrice;
 
         _amount[count]--;
     }
 
     public void CreateCheck(int count, TMP_Text textCheck)
     {
-        textCheck.text = "Название: " + _shop.TransferName[count] + ",\nколичество: " + _amount[count] + ",\nцена: " + _shop.TransferPrice[count] + ".";
+        textCheck.text = "Название: " + _toy.TransferName + ",\nколичество: " + _amount[count] + ",\nцена: " + _toy.TransferPrice + ".";
     }
 
     private void ShowDescription(int count, TMP_Text toyText)
     {
-        toyText.text = "Название: " + _shop.TransferName[count] + ",\nколичество: " + _amount[count] + "\nЦена: " + _shop.TransferPrice[count] + ".";
+        toyText.text = "Название: " + _toy.TransferName + ",\nколичество: " + _amount[count] + "\nЦена: " + _toy.TransferPrice + ".";
     }
 }
